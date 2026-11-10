@@ -1,7 +1,7 @@
 {
   "wallet": "2DzaTzWQhiHiEfaFzNZUD7cWRcttQQmnFy6JDTjAVKFP",
-  "updated_at": "2026-11-10T20:03:27+01:00",
-  "notes": "Watcher-only levels. Do not trade from this file. Routines may edit positions; watcher re-reads every loop. Source of truth for opens: trades.json / cartera open_positions. Profit protection: activate_at = entry*1.12, lock entry*1.05, trail peak*0.88. Existing positions keep stop_pct -8; new ones should use -15. GATO id=7 sold 21:12:57 (discretionary cut). STONK id=12 sold 11:37 10-nov (discretionary, downtrend near stop). CATE id=8 sold 15:05 10-nov (discretionary, downtrend near stop).",
+  "updated_at": "2026-11-10T20:37:00+01:00",
+  "notes": "Watcher-only levels. Do not trade from this file. Routines may edit positions; watcher re-reads every loop. Source of truth for opens: trades.json / cartera open_positions. Profit protection: activate_at = entry*1.12, lock entry*1.05, trail peak*0.88. Existing positions keep stop_pct -8; new ones should use -15. GATO id=7 sold 21:12:57 (discretionary cut). STONK id=12 sold 11:37 10-nov (discretionary, downtrend near stop). CATE id=8 sold 15:05 10-nov (discretionary, downtrend near stop). TROLL id=14 sold 20:37 10-nov (discretionary, downtrend near stop).",
   "positions": [
     {
       "symbol": "FARTCOIN",
@@ -13,39 +13,17 @@
       "profit_protect_active": false,
       "activate_at": 5.0288,
       "last_alert_at": null,
-      "last_value": 4.481676,
-      "last_price_usd": 0.11533591742358877,
+      "last_value": 4.437286,
+      "last_price_usd": 0.1141935549902574,
       "last_effective_stop": 4.131,
-      "last_check_at": "2026-11-10T20:03:27+01:00",
+      "last_check_at": "2026-11-10T20:36:29+01:00",
       "last_decision_source": "mark",
-      "last_quote_cash": 4.447643,
+      "last_quote_cash": 4.396141,
       "stop_pct": -8,
       "pp_lock_mult": 1.05,
       "pp_trail_mult": 0.88,
       "decimals": 6,
-      "last_quote_at": "2026-11-10T20:03+01:00"
-    },
-    {
-      "symbol": "TROLL",
-      "mint": "5UUH9RTDiSpq6HKS6bp4NdU9PNJpXRXuiw6ShBTBhgH2",
-      "amount": 122.799934,
-      "entry": 3.560058,
-      "stop": 3.275253,
-      "peak_value": 3.583398,
-      "profit_protect_active": false,
-      "activate_at": 3.987265,
-      "last_alert_at": null,
-      "decimals": 6,
-      "last_value": 3.424246,
-      "last_price_usd": 0.027884757596658358,
-      "last_effective_stop": 3.275253,
-      "last_check_at": "2026-11-10T20:03:27+01:00",
-      "last_decision_source": "mark",
-      "stop_pct": -8,
-      "pp_lock_mult": 1.05,
-      "pp_trail_mult": 0.88,
-      "last_quote_cash": 3.37825,
-      "last_quote_at": "2026-11-10T20:03+01:00"
+      "last_quote_at": "2026-11-10T20:36+01:00"
     }
   ],
   "last_price_source": "jupiter_v3"
