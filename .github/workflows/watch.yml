@@ -1,0 +1,54 @@
+# Billing note (GitHub Free, private repo = 2000 Actions minutes/month).
+# Jobs are rounded UP to the nearest minute. A 5-minute cron with one short
+# check still costs 1 minute per run:
+#   */5  => 12/hour * 24 * 30 = 8640 min/month  (over budget; ~7 days of quota)
+#   */15 => 2880 min/month  (still over)
+#   */22 => ~1964 min/month (fits)
+#   */30 => 1440 min/month  (comfortable)
+# An inner loop of ~4 minutes every 5 minutes would be ~34,560 min/month.
+# Therefore this workflow does a SINGLE check per run (no inner loop).
+name: Watch stops
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: solana-stop-watcher
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check levels
+        env:
+          WATCHER_WEBHOOK_URL: ${{ secrets.WATCHER_WEBHOOK_URL }}
+          WATCHER_WEBHOOK_KEY: ${{ secrets.WATCHER_WEBHOOK_KEY }}
+        run: python3 check.py
+
+      - name: Commit state if meaningful
+        run: |
+          set -euo pipefail
+          if [ -f .state-changed ] && grep -qx 'yes' .state-changed; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add watch-levels.json
+            if git diff --cached --quiet; then
+              echo "Flag set but no file diff; skipping commit"
+              exit 0
+            fi
+            git commit -m "chore: update watcher state [skip ci]"
+            git pull --rebase origin HEAD
+            git push
+          else
+            echo "No meaningful state change; skipping commit"
+          fi
