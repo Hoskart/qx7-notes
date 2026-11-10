@@ -1,24 +1,88 @@
-# Scheduled check. Cron minimum is 5 minutes; the job loops ~every 60s for
-# about 5 minutes so consecutive runs cover nearly continuously.
-# Concurrency queues overlapping runs instead of cancelling or doubling.
+# Cron is a restarter. The job also dispatches the next run when it finishes.
 name: scheduled-check
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "3-59/10 * * * *"
   workflow_dispatch:
-
-concurrency:
-  group: qx7-notes
-  cancel-in-progress: false
+    inputs:
+      loop_seconds:
+        description: "window"
+        required: false
+        default: "1500"
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
-  watch:
+  gate:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 3
+    outputs:
+      should_run: ${{ steps.decide.outputs.should_run }}
+      loop_seconds: ${{ steps.decide.outputs.loop_seconds }}
+    steps:
+      - id: decide
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          event="${GITHUB_EVENT_NAME}"
+          me="${GITHUB_RUN_ID}"
+          loop="${{ github.event.inputs.loop_seconds }}"
+          if [ -z "${loop}" ]; then
+            loop=1500
+          fi
+          echo "event=${event} run=${me} loop_seconds=${loop}"
+          echo "loop_seconds=${loop}" >> "${GITHUB_OUTPUT}"
+
+          others="$(python3 - "${me}" << 'PY'
+          import json, os, subprocess, sys
+          me = sys.argv[1]
+          repo = os.environ["GITHUB_REPOSITORY"]
+          ids = set()
+          for status in ("in_progress", "queued", "waiting", "pending", "requested"):
+              r = subprocess.run(
+                  [
+                      "gh", "run", "list", "-R", repo,
+                      "--workflow", "scheduled-check",
+                      "--status", status,
+                      "--limit", "50",
+                      "--json", "databaseId",
+                  ],
+                  capture_output=True, text=True,
+              )
+              if r.returncode != 0:
+                  print(f"warn: list {status} rc={r.returncode}", file=sys.stderr)
+                  continue
+              try:
+                  data = json.loads(r.stdout or "[]")
+              except Exception:
+                  continue
+              for row in data:
+                  i = str(row.get("databaseId") or "")
+                  if i and i != str(me):
+                      ids.add(i)
+          print(len(ids))
+          PY
+          )"
+          echo "other_active=${others}"
+          if [ "${event}" = "schedule" ] && [ "${others}" != "0" ]; then
+            echo "restarter: another run is already active; exiting"
+            echo "should_run=false" >> "${GITHUB_OUTPUT}"
+          else
+            echo "should_run=true" >> "${GITHUB_OUTPUT}"
+          fi
+
+  watch:
+    needs: gate
+    if: needs.gate.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    concurrency:
+      group: qx7-notes
+      cancel-in-progress: false
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -27,6 +91,7 @@ jobs:
         env:
           WATCHER_WEBHOOK_URL: ${{ secrets.WATCHER_WEBHOOK_URL }}
           WATCHER_WEBHOOK_KEY: ${{ secrets.WATCHER_WEBHOOK_KEY }}
+          LOOP_SECONDS: ${{ needs.gate.outputs.loop_seconds }}
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
@@ -56,31 +121,74 @@ jobs:
             return 1
           }
 
-          end=$((SECONDS + 300))
+          window="${LOOP_SECONDS:-1500}"
+          end=$((SECONDS + window))
           iter=0
+          echo "check window=${window}s"
           while true; do
             iter=$((iter + 1))
             loop_start=$SECONDS
             echo "loop_iter=${iter} elapsed=${SECONDS}s"
             python3 check.py
             commit_state
-            if [ "$SECONDS" -ge "$end" ] || [ "$iter" -ge 5 ]; then
+            leftover=$((end - SECONDS))
+            if [ "${leftover}" -le 0 ]; then
               echo "loop done iter=${iter} elapsed=${SECONDS}s"
               break
             fi
             remain=$((60 - (SECONDS - loop_start)))
-            if [ "$remain" -lt 1 ]; then
+            if [ "${remain}" -lt 1 ]; then
               remain=1
             fi
-            # Do not overshoot the 5-minute window by much.
-            leftover=$((end - SECONDS))
-            if [ "$leftover" -le 0 ]; then
-              echo "loop done iter=${iter} elapsed=${SECONDS}s"
-              break
-            fi
-            if [ "$remain" -gt "$leftover" ]; then
-              remain=$leftover
+            if [ "${remain}" -gt "${leftover}" ]; then
+              remain=${leftover}
             fi
             echo "sleep ${remain}s until next iter"
-            sleep "$remain"
+            sleep "${remain}"
           done
+
+      - name: Chain next
+        if: ${{ !cancelled() }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          me="${GITHUB_RUN_ID}"
+          ref="${GITHUB_REF_NAME:-main}"
+          others="$(python3 - "${me}" << 'PY'
+          import json, os, subprocess, sys
+          me = sys.argv[1]
+          repo = os.environ["GITHUB_REPOSITORY"]
+          ids = set()
+          for status in ("in_progress", "queued", "waiting", "pending", "requested"):
+              r = subprocess.run(
+                  [
+                      "gh", "run", "list", "-R", repo,
+                      "--workflow", "scheduled-check",
+                      "--status", status,
+                      "--limit", "50",
+                      "--json", "databaseId",
+                  ],
+                  capture_output=True, text=True,
+              )
+              if r.returncode != 0:
+                  print(f"warn: list {status} rc={r.returncode}", file=sys.stderr)
+                  continue
+              try:
+                  data = json.loads(r.stdout or "[]")
+              except Exception:
+                  continue
+              for row in data:
+                  i = str(row.get("databaseId") or "")
+                  if i and i != str(me):
+                      ids.add(i)
+          print(len(ids))
+          PY
+          )"
+          echo "other_active=${others}"
+          if [ "${others}" != "0" ]; then
+            echo "chain: another run is already queued or in progress; skipping dispatch"
+            exit 0
+          fi
+          echo "chain: dispatching next run on ${ref}"
+          gh workflow run scheduled-check --ref "${ref}"
