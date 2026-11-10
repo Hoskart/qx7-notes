@@ -1,13 +1,7 @@
-# Billing note (GitHub Free, private repo = 2000 Actions minutes/month).
-# Jobs are rounded UP to the nearest minute. A 5-minute cron with one short
-# check still costs 1 minute per run:
-#   */5  => 12/hour * 24 * 30 = 8640 min/month  (over budget; ~7 days of quota)
-#   */15 => 2880 min/month  (still over)
-#   */22 => ~1964 min/month (fits)
-#   */30 => 1440 min/month  (comfortable)
-# An inner loop of ~4 minutes every 5 minutes would be ~34,560 min/month.
-# Therefore this workflow does a SINGLE check per run (no inner loop).
-name: Watch stops
+# Scheduled check. Cron minimum is 5 minutes; the job loops ~every 60s for
+# about 5 minutes so consecutive runs cover nearly continuously.
+# Concurrency queues overlapping runs instead of cancelling or doubling.
+name: scheduled-check
 
 on:
   schedule:
@@ -15,7 +9,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: solana-stop-watcher
+  group: qx7-notes
   cancel-in-progress: false
 
 permissions:
@@ -24,31 +18,69 @@ permissions:
 jobs:
   watch:
     runs-on: ubuntu-latest
-    timeout-minutes: 4
+    timeout-minutes: 8
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Check levels
         env:
           WATCHER_WEBHOOK_URL: ${{ secrets.WATCHER_WEBHOOK_URL }}
           WATCHER_WEBHOOK_KEY: ${{ secrets.WATCHER_WEBHOOK_KEY }}
-        run: python3 check.py
-
-      - name: Commit state if meaningful
         run: |
           set -euo pipefail
-          if [ -f .state-changed ] && grep -qx 'yes' .state-changed; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          commit_state() {
+            if [ ! -f .state-changed ] || ! grep -qx 'yes' .state-changed; then
+              echo "No meaningful state change; skipping commit"
+              return 0
+            fi
             git add watch-levels.json
             if git diff --cached --quiet; then
               echo "Flag set but no file diff; skipping commit"
-              exit 0
+              return 0
             fi
-            git commit -m "chore: update watcher state [skip ci]"
-            git pull --rebase origin HEAD
-            git push
-          else
-            echo "No meaningful state change; skipping commit"
-          fi
+            git commit -m "chore: update state [skip ci]"
+            local attempt
+            for attempt in 1 2 3 4 5; do
+              if git pull --rebase origin HEAD && git push; then
+                echo "State committed and pushed"
+                return 0
+              fi
+              echo "Push conflict or race (attempt ${attempt}); retrying"
+              sleep $((attempt * 3))
+            done
+            echo "ERROR: failed to push state after retries" >&2
+            return 1
+          }
+
+          end=$((SECONDS + 300))
+          iter=0
+          while true; do
+            iter=$((iter + 1))
+            loop_start=$SECONDS
+            echo "loop_iter=${iter} elapsed=${SECONDS}s"
+            python3 check.py
+            commit_state
+            if [ "$SECONDS" -ge "$end" ] || [ "$iter" -ge 5 ]; then
+              echo "loop done iter=${iter} elapsed=${SECONDS}s"
+              break
+            fi
+            remain=$((60 - (SECONDS - loop_start)))
+            if [ "$remain" -lt 1 ]; then
+              remain=1
+            fi
+            # Do not overshoot the 5-minute window by much.
+            leftover=$((end - SECONDS))
+            if [ "$leftover" -le 0 ]; then
+              echo "loop done iter=${iter} elapsed=${SECONDS}s"
+              break
+            fi
+            if [ "$remain" -gt "$leftover" ]; then
+              remain=$leftover
+            fi
+            echo "sleep ${remain}s until next iter"
+            sleep "$remain"
+          done
