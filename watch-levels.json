@@ -1,7 +1,7 @@
 {
   "wallet": "2DzaTzWQhiHiEfaFzNZUD7cWRcttQQmnFy6JDTjAVKFP",
-  "updated_at": "2026-11-11T15:57:16+01:00",
-  "notes": "Watcher-only levels. Do not trade from this file. Routines may edit positions; watcher re-reads every loop. Source of truth for opens: trades.json / cartera open_positions. Profit protection: activate_at = entry*1.12, lock entry*1.05, trail peak*0.88. Existing positions keep stop_pct -8; new ones should use -15. GATO id=7 sold 21:12:57 (discretionary cut). STONK id=12 sold 11:37 10-nov (discretionary, downtrend near stop). CATE id=8 sold 15:05 10-nov (discretionary, downtrend near stop). TROLL id=14 sold 20:37 10-nov (discretionary, downtrend near stop). MPLX id=15 bought 12:10 11-nov: new rules, stop -15% (2.048504), PP arms at +8% (activate_at 2.602805), floor entry*1.03, trail peak*0.90 (per-position pp_lock_mult/pp_trail_mult, read by watcher.py and check.py).",
+  "updated_at": "2026-11-11T17:05:00+01:00",
+  "notes": "Watcher-only levels. Do not trade from this file. Routines may edit positions; watcher re-reads every loop. Source of truth for opens: trades.json / cartera open_positions. Profit protection: activate_at = entry*1.12, lock entry*1.05, trail peak*0.88. Existing positions keep stop_pct -8; new ones should use -15. GATO id=7 sold 21:12:57 (discretionary cut). STONK id=12 sold 11:37 10-nov (discretionary, downtrend near stop). CATE id=8 sold 15:05 10-nov (discretionary, downtrend near stop). TROLL id=14 sold 20:37 10-nov (discretionary, downtrend near stop). MPLX id=15 bought 12:10 11-nov: new rules, stop -15% (2.048504), PP arms at +8% (activate_at 2.602805), floor entry*1.03, trail peak*0.90 (per-position pp_lock_mult/pp_trail_mult, read by watcher.py and check.py). SPX id=16 bought 17:05 11-nov: new rules, stop -15% (1.925595), PP arms +8% (2.446638), floor x1.03, trail x0.90.",
   "positions": [
     {
       "symbol": "FARTCOIN",
@@ -13,10 +13,10 @@
       "profit_protect_active": false,
       "activate_at": 5.0288,
       "last_alert_at": null,
-      "last_value": 4.518019,
-      "last_price_usd": 0.11627121039047798,
+      "last_value": 4.581923,
+      "last_price_usd": 0.11791578565887961,
       "last_effective_stop": 4.131,
-      "last_check_at": "2026-11-11T15:57:16+01:00",
+      "last_check_at": "2026-11-11T17:03:25+01:00",
       "last_decision_source": "mark",
       "last_quote_cash": 4.527732,
       "stop_pct": -8,
@@ -35,7 +35,7 @@
       "profit_protect_active": false,
       "activate_at": 2.602805,
       "last_alert_at": null,
-      "last_value": 2.259139,
+      "last_value": 2.271265,
       "last_quote_cash": 2.277772,
       "last_quote_at": "2026-11-11T15:52:00+01:00",
       "stop_pct": -15,
@@ -45,10 +45,28 @@
       "protect_floor_mult": 1.03,
       "protect_trail_mult": 0.9,
       "decimals": 6,
-      "last_price_usd": 0.07169963638971036,
+      "last_price_usd": 0.07208447968264706,
       "last_effective_stop": 2.048504,
-      "last_check_at": "2026-11-11T15:57:16+01:00",
+      "last_check_at": "2026-11-11T17:03:25+01:00",
       "last_decision_source": "mark"
+    },
+    {
+      "symbol": "SPX",
+      "mint": "J3NKxxXZcnNiMjKw9hYb2K4LUxgwB6t1FtPtQVsv3KFr",
+      "amount": 5.88361995,
+      "entry": 2.265406,
+      "stop": 1.925595,
+      "peak_value": 2.244663,
+      "profit_protect_active": false,
+      "activate_at": 2.446638,
+      "last_alert_at": null,
+      "stop_pct": -15,
+      "pp_lock_mult": 1.03,
+      "pp_trail_mult": 0.9,
+      "protect_arm_pct": 8,
+      "protect_floor_mult": 1.03,
+      "protect_trail_mult": 0.9,
+      "decimals": 8
     }
   ],
   "last_price_source": "jupiter_v3"
