@@ -1,6 +1,6 @@
 {
   "wallet": "2DzaTzWQhiHiEfaFzNZUD7cWRcttQQmnFy6JDTjAVKFP",
-  "updated_at": "2026-11-11T02:03:34+01:00",
+  "updated_at": "2026-11-11T02:55:10+01:00",
   "notes": "Watcher-only levels. Do not trade from this file. Routines may edit positions; watcher re-reads every loop. Source of truth for opens: trades.json / cartera open_positions. Profit protection: activate_at = entry*1.12, lock entry*1.05, trail peak*0.88. Existing positions keep stop_pct -8; new ones should use -15. GATO id=7 sold 21:12:57 (discretionary cut). STONK id=12 sold 11:37 10-nov (discretionary, downtrend near stop). CATE id=8 sold 15:05 10-nov (discretionary, downtrend near stop). TROLL id=14 sold 20:37 10-nov (discretionary, downtrend near stop).",
   "positions": [
     {
@@ -13,10 +13,10 @@
       "profit_protect_active": false,
       "activate_at": 5.0288,
       "last_alert_at": null,
-      "last_value": 4.471784,
-      "last_price_usd": 0.11508137092946774,
+      "last_value": 4.497938,
+      "last_price_usd": 0.1157544398942638,
       "last_effective_stop": 4.131,
-      "last_check_at": "2026-11-11T02:03:34+01:00",
+      "last_check_at": "2026-11-11T02:55:10+01:00",
       "last_decision_source": "mark",
       "last_quote_cash": 4.43301,
       "stop_pct": -8,
