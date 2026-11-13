@@ -1,7 +1,7 @@
 {
   "wallet": "2DzaTzWQhiHiEfaFzNZUD7cWRcttQQmnFy6JDTjAVKFP",
-  "updated_at": "2026-11-12T23:59:25+01:00",
-  "notes": "Watcher-only levels. Do not trade from this file. Routines may edit positions; watcher re-reads every loop. Source of truth for opens: trades.json / cartera open_positions. Profit protection: activate_at = entry*1.12, lock entry*1.05, trail peak*0.88. Existing positions keep stop_pct -8; new ones should use -15. GATO id=7 sold 21:12:57 (discretionary cut). STONK id=12 sold 11:37 10-nov (discretionary, downtrend near stop). CATE id=8 sold 15:05 10-nov (discretionary, downtrend near stop). TROLL id=14 sold 20:37 10-nov (discretionary, downtrend near stop). MPLX id=15 bought 12:10 11-nov: new rules, stop -15% (2.048504), PP arms at +8% (activate_at 2.602805), floor entry*1.03, trail peak*0.90 (per-position pp_lock_mult/pp_trail_mult, read by watcher.py and check.py). SPX id=16 bought 17:05 11-nov: new rules, stop -15% (1.925595), PP arms +8% (2.446638), floor x1.03, trail x0.90. FARTCOIN sold 18:42 12-nov at stop (4.094165 CASH).",
+  "updated_at": "2026-11-13T01:08:00+01:00",
+  "notes": "Watcher-only levels. Do not trade from this file. Routines may edit positions; watcher re-reads every loop. Source of truth for opens: trades.json / cartera open_positions. Profit protection: activate_at = entry*1.12, lock entry*1.05, trail peak*0.88. Existing positions keep stop_pct -8; new ones should use -15. GATO id=7 sold 21:12:57 (discretionary cut). STONK id=12 sold 11:37 10-nov (discretionary, downtrend near stop). CATE id=8 sold 15:05 10-nov (discretionary, downtrend near stop). TROLL id=14 sold 20:37 10-nov (discretionary, downtrend near stop). MPLX id=15 bought 12:10 11-nov: new rules, stop -15% (2.048504), PP arms at +8% (activate_at 2.602805), floor entry*1.03, trail peak*0.90 (per-position pp_lock_mult/pp_trail_mult, read by watcher.py and check.py). SPX id=16 bought 17:05 11-nov: new rules, stop -15% (1.925595), PP arms +8% (2.446638), floor x1.03, trail x0.90. FARTCOIN sold 18:42 12-nov at stop (4.094165 CASH). USELESS id=18 bought 01:08 13-nov: new rules, stop -15% (2.018861), PP arms +8% (2.565141), floor x1.03, trail x0.90.",
   "positions": [
     {
       "symbol": "MPLX",
@@ -13,9 +13,9 @@
       "profit_protect_active": false,
       "activate_at": 2.602805,
       "last_alert_at": null,
-      "last_value": 2.113893,
-      "last_quote_cash": 2.114579,
-      "last_quote_at": "2026-11-12T23:59:00+01:00",
+      "last_value": 2.131411,
+      "last_quote_cash": 2.12753,
+      "last_quote_at": "2026-11-13T00:37:50+01:00",
       "stop_pct": -15,
       "pp_lock_mult": 1.03,
       "pp_trail_mult": 0.9,
@@ -23,9 +23,9 @@
       "protect_floor_mult": 1.03,
       "protect_trail_mult": 0.9,
       "decimals": 6,
-      "last_price_usd": 0.0670898768035352,
+      "last_price_usd": 0.06764587673286453,
       "last_effective_stop": 2.048504,
-      "last_check_at": "2026-11-12T23:59:25+01:00",
+      "last_check_at": "2026-11-13T01:07:23+01:00",
       "last_decision_source": "mark"
     },
     {
@@ -45,13 +45,35 @@
       "protect_floor_mult": 1.03,
       "protect_trail_mult": 0.9,
       "decimals": 8,
-      "last_value": 2.027403,
-      "last_price_usd": 0.3445842411559673,
+      "last_value": 2.046191,
+      "last_price_usd": 0.3477775003480518,
       "last_effective_stop": 1.925595,
-      "last_check_at": "2026-11-12T23:59:25+01:00",
+      "last_check_at": "2026-11-13T01:07:23+01:00",
       "last_decision_source": "mark",
-      "last_quote_cash": 2.02939,
-      "last_quote_at": "2026-11-12T23:59:00+01:00"
+      "last_quote_cash": 2.038884,
+      "last_quote_at": "2026-11-13T00:37:50+01:00"
+    },
+    {
+      "symbol": "USELESS",
+      "mint": "Dz9mQ9NzkBcCsuGPFJ3r1bS4wgqKMHBPiVuniW8Mbonk",
+      "amount": 17.773301,
+      "entry": 2.375131,
+      "stop": 2.018861,
+      "peak_value": 2.351183,
+      "profit_protect_active": false,
+      "activate_at": 2.565141,
+      "last_alert_at": null,
+      "stop_pct": -15,
+      "pp_lock_mult": 1.03,
+      "pp_trail_mult": 0.9,
+      "protect_arm_pct": 8,
+      "protect_floor_mult": 1.03,
+      "protect_trail_mult": 0.9,
+      "decimals": 6,
+      "last_value": 2.351183,
+      "last_quote_cash": 2.351183,
+      "last_quote_at": "2026-11-13T01:08:00+01:00",
+      "last_effective_stop": 2.018861
     }
   ],
   "last_price_source": "jupiter_v3"
