@@ -1,6 +1,6 @@
 {
   "wallet": "2DzaTzWQhiHiEfaFzNZUD7cWRcttQQmnFy6JDTjAVKFP",
-  "updated_at": "2026-11-26T03:12:41+01:00",
+  "updated_at": "2026-11-26T03:59:46+01:00",
   "notes": "Watcher-only levels. Do not trade from this file. Routines may edit positions; watcher re-reads every loop. Source of truth for opens: trades.json / cartera open_positions. Profit protection: activate_at = entry*1.12, lock entry*1.05, trail peak*0.88. Existing positions keep stop_pct -8; new ones should use -15. GATO id=7 sold 21:12:57 (discretionary cut). STONK id=12 sold 11:37 10-nov (discretionary, downtrend near stop). CATE id=8 sold 15:05 10-nov (discretionary, downtrend near stop). TROLL id=14 sold 20:37 10-nov (discretionary, downtrend near stop). MPLX id=15 bought 12:10 11-nov: new rules, stop -15% (2.048504), PP arms at +8% (activate_at 2.602805), floor entry*1.03, trail peak*0.90 (per-position pp_lock_mult/pp_trail_mult, read by watcher.py and check.py). SPX id=16 bought 17:05 11-nov: new rules, stop -15% (1.925595), PP arms +8% (2.446638), floor x1.03, trail x0.90. FARTCOIN sold 18:42 12-nov at stop (4.094165 CASH). USELESS id=18 bought 01:08 13-nov: new rules, stop -15% (2.018861), PP arms +8% (2.565141), floor x1.03, trail x0.90. SPX id=16 sold 04:52 13-nov (discretionary, downtrend 1.3% above stop), trade id 19. MPLX id=15 sold 20:43:45 16-nov at stop after Phantom outage (1.962968 CASH, -18.55%, trade id 20). USELESS id=18 sold 20:44:31 16-nov at stop after Phantom outage (1.676035 CASH, -29.43%, trade id 21). 7-day no-rebuy: FARTCOIN until 2026-11-19T18:42, SPX until 2026-11-20T04:52, MPLX until 2026-11-23T20:43:45, USELESS until 2026-11-23T20:44:31. HYPE id=22 bought 00:36 17-nov: new rules, stop -15% (2.181608), PP arms +8% (2.771926), floor x1.03, trail x0.90. RAY id=23 bought 01:01 18-nov: new rules, stop -15% (2.050711), PP arms +8% (2.605609), floor x1.03, trail x0.90. ZEC id=24 bought 10:09 19-nov: new rules, stop -15% (1.927669), PP arms +8% (2.449274), floor x1.03, trail x0.90. ZEC id=24 sold 12:51 20-nov (discretionary, downtrend 1.1% above stop, 1.932301 CASH, -14.80%, trade id 25). HYPE id=22 sold 16:34 20-nov (id 26, discretionary, downtrend near stop). RAY id=23 sold 20:20 20-nov at stop (2.048831 CASH, -15.08%, trade id 27). 7-day no-rebuy: ZEC until 2026-11-27T12:51, HYPE until 2026-11-27T16:34, RAY until 2026-11-27T20:20. neet id=28 sold 18:58 22-nov via profit protection (2.513916 CASH, +0.41%, trade id 29). FARTCOIN id=30 sold 19:41 23-nov via profit protection (~2.5574 CASH, +2.12%, trade id 31). 7-day no-rebuy: FARTCOIN until 2026-11-30T19:41.Watcher-only levels. Do not trade from this file. Routines may edit positions; watcher re-reads every loop. Source of truth for opens: trades.json / cartera open_positions. Profit protection: activate_at = entry*1.12, lock entry*1.05, trail peak*0.88. Existing positions keep stop_pct -8; new ones should use -15. GATO id=7 sold 21:12:57 (discretionary cut). STONK id=12 sold 11:37 10-nov (discretionary, downtrend near stop). CATE id=8 sold 15:05 10-nov (discretionary, downtrend near stop). TROLL id=14 sold 20:37 10-nov (discretionary, downtrend near stop). MPLX id=15 bought 12:10 11-nov: new rules, stop -15% (2.048504), PP arms at +8% (activate_at 2.602805), floor entry*1.03, trail peak*0.90 (per-position pp_lock_mult/pp_trail_mult, read by watcher.py and check.py). SPX id=16 bought 17:05 11-nov: new rules, stop -15% (1.925595), PP arms +8% (2.446638), floor x1.03, trail x0.90. FARTCOIN sold 18:42 12-nov at stop (4.094165 CASH). USELESS id=18 bought 01:08 13-nov: new rules, stop -15% (2.018861), PP arms +8% (2.565141), floor x1.03, trail x0.90. SPX id=16 sold 04:52 13-nov (discretionary, downtrend 1.3% above stop), trade id 19. MPLX id=15 sold 20:43:45 16-nov at stop after Phantom outage (1.962968 CASH, -18.55%, trade id 20). USELESS id=18 sold 20:44:31 16-nov at stop after Phantom outage (1.676035 CASH, -29.43%, trade id 21). 7-day no-rebuy: FARTCOIN until 2026-11-19T18:42, SPX until 2026-11-20T04:52, MPLX until 2026-11-23T20:43:45, USELESS until 2026-11-23T20:44:31. HYPE id=22 bought 00:36 17-nov: new rules, stop -15% (2.181608), PP arms +8% (2.771926), floor x1.03, trail x0.90. RAY id=23 bought 01:01 18-nov: new rules, stop -15% (2.050711), PP arms +8% (2.605609), floor x1.03, trail x0.90. ZEC id=24 bought 10:09 19-nov: new rules, stop -15% (1.927669), PP arms +8% (2.449274), floor x1.03, trail x0.90. ZEC id=24 sold 12:51 20-nov (discretionary, downtrend 1.1% above stop, 1.932301 CASH, -14.80%, trade id 25). HYPE id=22 sold 16:34 20-nov (id 26, discretionary, downtrend near stop). RAY id=23 sold 20:20 20-nov at stop (2.048831 CASH, -15.08%, trade id 27). 7-day no-rebuy: ZEC until 2026-11-27T12:51, HYPE until 2026-11-27T16:34, RAY until 2026-11-27T20:20. neet id=28 sold 18:58 22-nov via profit protection (2.513916 CASH, +0.41%, trade id 29). FARTCOIN id=30 sold 19:41 23-nov via profit protection (~2.5574 CASH, +2.12%, trade id 31). 7-day no-rebuy: FARTCOIN until 2026-11-30T19:41. PUMP id=32 bought 20:03 25-nov: stop -15% (2.131267), PP arms +8% (2.707963), floor x1.03, trail x0.90. TRUMP id=33 bought 22:00 25-nov: stop -15% (2.003391), PP arms +8% (2.545484), floor x1.03, trail x0.90. pippin id=34 bought 00:01 26-nov: stop -15% (1.883186), PP arms +8% (2.392754), floor x1.03, trail x0.90.",
   "positions": [
     {
@@ -21,13 +21,13 @@
       "peak_value": 2.673636,
       "profit_protect_active": false,
       "bought_at": "2026-11-25T20:03:00+01:00",
-      "last_value": 2.667579,
-      "last_price_usd": 0.002647038184642624,
+      "last_value": 2.626317,
+      "last_price_usd": 0.002606093234810701,
       "last_effective_stop": 2.131267,
-      "last_check_at": "2026-11-26T03:12:41+01:00",
-      "last_decision_source": "quote",
+      "last_check_at": "2026-11-26T03:59:46+01:00",
+      "last_decision_source": "mark",
       "last_alert_at": null,
-      "last_quote_cash": 2.673636
+      "last_quote_cash": 2.633044
     },
     {
       "trade_id": 33,
@@ -47,13 +47,13 @@
       "peak_value": 2.447421,
       "profit_protect_active": false,
       "bought_at": "2026-11-25T22:00:00+01:00",
-      "last_value": 2.442664,
-      "last_price_usd": 0.9063776710909627,
+      "last_value": 2.425111,
+      "last_price_usd": 0.8998643095839333,
       "last_effective_stop": 2.003391,
-      "last_check_at": "2026-11-26T03:12:41+01:00",
-      "last_decision_source": "quote",
+      "last_check_at": "2026-11-26T03:59:46+01:00",
+      "last_decision_source": "mark",
       "last_alert_at": null,
-      "last_quote_cash": 2.447421
+      "last_quote_cash": 2.441807
     },
     {
       "trade_id": 34,
@@ -73,13 +73,13 @@
       "peak_value": 2.244583,
       "profit_protect_active": false,
       "bought_at": "2026-11-26T00:01:00+01:00",
-      "last_value": 2.199707,
-      "last_price_usd": 0.019036538047904526,
+      "last_value": 2.200652,
+      "last_price_usd": 0.019044721744535118,
       "last_effective_stop": 1.883186,
-      "last_check_at": "2026-11-26T03:12:41+01:00",
-      "last_decision_source": "quote",
+      "last_check_at": "2026-11-26T03:59:46+01:00",
+      "last_decision_source": "mark",
       "last_alert_at": null,
-      "last_quote_cash": 2.192897
+      "last_quote_cash": 2.221175
     }
   ],
   "last_price_source": "jupiter_v3",
